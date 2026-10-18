@@ -1,0 +1,137 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ------------------------------------
+// ENUMS
+// ------------------------------------
+enum Role {
+  ADMIN
+  MEMBER
+}
+
+enum Plan {
+  FREE
+  PRO
+  ENTERPRISE
+}
+
+enum Severity {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+enum IncidentStatus {
+  OPEN
+  INVESTIGATING
+  RESOLVED
+}
+
+// ------------------------------------
+// 1. TENANT / ORGANIZATION
+// ------------------------------------
+model Organization {
+  id                String           @id @default(cuid())
+  name              String
+  slug              String           @unique
+  plan              Plan             @default(FREE)
+  monthlyQuota      Int              @default(100000) // Monthly allowed requests
+  eventsCount       Int              @default(0)      // Current cycle usage
+  discordWebhookUrl String?          // Tenant's custom Discord Webhook
+  slackWebhookUrl   String?          // Tenant's custom Slack Webhook (PRO only)
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+
+  // Relationships
+  users           User[]
+  apiKeys         ApiKey[]
+  telemetryEvents TelemetryEvent[]
+  incidents       Incident[]
+
+  @@map("organizations")
+}
+
+// ------------------------------------
+// 2. USER & AUTHENTICATION
+// ------------------------------------
+model User {
+  id             String        @id @default(cuid())
+  email          String        @unique
+  passwordHash   String
+  name           String?
+  role           Role          @default(MEMBER)
+  organizationId String
+  organization   Organization  @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  @@index([organizationId])
+  @@map("users")
+}
+
+// ------------------------------------
+// 3. API KEYS (Ingestion Auth)
+// ------------------------------------
+model ApiKey {
+  id             String       @id @default(cuid())
+  name           String       // e.g. "Production US-East Backend"
+  key            String       @unique // e.g. "pe_live_abc123..."
+  rateLimit      Int          @default(60) // Requests per minute
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  lastUsedAt     DateTime?
+  createdAt      DateTime     @default(now())
+
+  @@index([organizationId])
+  @@map("api_keys")
+}
+
+// ------------------------------------
+// 4. TELEMETRY & LOG STREAM
+// ------------------------------------
+model TelemetryEvent {
+  id             String       @id @default(cuid())
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  endpoint       String       // e.g. "/api/v1/checkout"
+  method         String       // GET, POST, etc.
+  statusCode     Int          // 200, 404, 500
+  latency        Int          // In milliseconds (e.g. 142ms)
+  ip             String?
+  userAgent      String?
+  timestamp      DateTime     @default(now())
+
+  // Composite Index for high-performance dashboard charts
+  @@index([organizationId, timestamp])
+  @@map("telemetry_events")
+}
+
+// ------------------------------------
+// 5. INCIDENTS & AI ROOT-CAUSE
+// ------------------------------------
+model Incident {
+  id             String         @id @default(cuid())
+  organizationId String
+  organization   Organization   @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  title          String         // e.g. "Payment Gateway 500 Spike"
+  description    String
+  severity       Severity       @default(HIGH)
+  status         IncidentStatus @default(OPEN)
+  aiDiagnosis    String?        // Gemini AI root cause & suggested fix markdown
+  resolvedAt     DateTime?
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+
+  @@index([organizationId, status])
+  @@map("incidents")
+}

@@ -1,0 +1,83 @@
+﻿version: "3.9"
+
+services:
+  # ----------------------------------------------------------------------------
+  # PulseEngine Web Application (Next.js 16 + Turbopack + SRE AI Engine)
+  # ----------------------------------------------------------------------------
+  pulseengine-web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: pulseengine_web
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - HOSTNAME=0.0.0.0
+    depends_on:
+      pulseengine-postgres:
+        condition: service_healthy
+      pulseengine-redis:
+        condition: service_started
+    networks:
+      - pulseengine-net
+
+  # ----------------------------------------------------------------------------
+  # PulseEngine Local In-Memory Cache & Ingestion Stream Queue (Redis)
+  # (Can be used locally or swapped with Upstash Redis in .env)
+  # ----------------------------------------------------------------------------
+  pulseengine-redis:
+    image: redis:7-alpine
+    container_name: pulseengine_redis
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes"]
+    ports:
+      - "6379:6379"
+    volumes:
+      - pulseengine_redis_data:/data
+    networks:
+      - pulseengine-net
+
+  # ----------------------------------------------------------------------------
+  # PulseEngine Local Relational Database (PostgreSQL 16)
+  # (Can be used locally or swapped with Neon PostgreSQL in .env)
+  # ----------------------------------------------------------------------------
+  pulseengine-postgres:
+    image: postgres:16-alpine
+    container_name: pulseengine_postgres
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-pulseengine}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-pulseengine_secret}
+      POSTGRES_DB: ${POSTGRES_DB:-pulseengine}
+    volumes:
+      - pulseengine_pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-pulseengine} -d ${POSTGRES_DB:-pulseengine}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - pulseengine-net
+
+# ------------------------------------------------------------------------------
+# Persistent Docker Volumes
+# ------------------------------------------------------------------------------
+volumes:
+  pulseengine_pg_data:
+    driver: local
+  pulseengine_redis_data:
+    driver: local
+
+# ------------------------------------------------------------------------------
+# Isolated Bridge Network
+# ------------------------------------------------------------------------------
+networks:
+  pulseengine-net:
+    driver: bridge
