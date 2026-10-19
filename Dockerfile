@@ -1,10 +1,10 @@
-﻿# ==============================================================================
+# ==============================================================================
 # PulseEngine - Production Multi-Stage Dockerfile
-# Optimized for Next.js 16 App Router + Standalone Output + Alpine Linux
+# Optimized for Next.js 16 App Router + Standalone Output + Alpine Linux (Node 22 LTS)
 # ==============================================================================
 
 # Stage 1: Base Alpine image with required shared libraries
-FROM node:20-alpine AS base
+FROM node:22-alpine AS base
 WORKDIR /app
 RUN apk add --no-cache libc6-compat openssl
 ENV NODE_ENV=production
@@ -14,6 +14,7 @@ FROM base AS deps
 WORKDIR /app
 COPY package.json package-lock.json ./
 COPY prisma ./prisma/
+ENV DATABASE_URL="postgresql://dummy:dummy@localhost:5432/dummy"
 # Install dependencies including devDependencies required to build the app
 RUN npm ci --include=dev
 
@@ -24,6 +25,7 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
 # Generate Prisma Client for the Linux Alpine container architecture
+ENV DATABASE_URL="postgresql://dummy:dummy@localhost:5432/dummy"
 ENV PRISMA_CLI_QUERY_ENGINE_TYPE=binary
 RUN npx prisma generate
 
