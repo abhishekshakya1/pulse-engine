@@ -23,6 +23,7 @@ FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+RUN mkdir -p public
 
 # Generate Prisma Client for the Linux Alpine container architecture
 ENV DATABASE_URL="postgresql://dummy:dummy@localhost:5432/dummy"
