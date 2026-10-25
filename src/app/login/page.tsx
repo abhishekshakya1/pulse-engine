@@ -130,14 +130,23 @@ function LoginForm() {
             <div className="relative">
               <Lock className="absolute left-3 top-2.5 h-4 w-4 text-zinc-400" />
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 required
                 disabled={loading || isSuccess}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••••••"
-                className="w-full pl-9.5 pr-3 py-2 bg-zinc-50 dark:bg-[#090A0D] border border-zinc-200 dark:border-zinc-800 rounded-xl text-xs font-mono text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 focus:outline-none focus:border-indigo-500 transition disabled:opacity-60"
+                className="w-full pl-9.5 pr-10 py-2 bg-zinc-50 dark:bg-[#090A0D] border border-zinc-200 dark:border-zinc-800 rounded-xl text-xs font-mono text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 focus:outline-none focus:border-indigo-500 transition disabled:opacity-60"
               />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-2.5 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 transition cursor-pointer p-0.5"
+                title={showPassword ? "Hide password" : "Show password"}
+                tabIndex={-1}
+              >
+                {showPassword ? <EyeOff className="h-4 w-4 text-indigo-500" /> : <Eye className="h-4 w-4" />}
+              </button>
             </div>
           </div>
 

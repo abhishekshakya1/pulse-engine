@@ -625,19 +625,19 @@ export default function LandingPage() {
 
               {/* Card 2: Live SRE Terminal Log Stream */}
               <div className="bg-slate-900 border border-slate-800 rounded-3xl p-5 shadow-lg text-slate-200">
-                <div className="flex items-center justify-between pb-3 border-b border-slate-800 mb-3">
-                  <div className="flex items-center gap-2">
-                    <div className="flex items-center gap-1.5">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 pb-3 border-b border-slate-800 mb-3">
+                  <div className="flex items-center gap-2 min-w-0">
+                    <div className="flex items-center gap-1.5 shrink-0">
                       <span className="w-2.5 h-2.5 rounded-full bg-rose-500" />
                       <span className="w-2.5 h-2.5 rounded-full bg-amber-500" />
                       <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
                     </div>
-                    <span className="ml-2 font-mono text-xs text-slate-400 flex items-center gap-1.5">
-                      <Terminal className="w-3.5 h-3.5 text-indigo-400" />
-                      edge-node-01:/var/log/telemetry.stream
+                    <span className="ml-1.5 font-mono text-xs text-slate-400 flex items-center gap-1.5 truncate">
+                      <Terminal className="w-3.5 h-3.5 text-indigo-400 shrink-0" />
+                      <span className="truncate">edge-node-01:/var/log/telemetry.stream</span>
                     </span>
                   </div>
-                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-400">
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-400 shrink-0 self-start sm:self-auto border border-slate-700/60">
                     Live Buffer (5 events)
                   </span>
                 </div>

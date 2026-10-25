@@ -18,6 +18,11 @@ export const metadata: Metadata = {
   title: "PulseEngine | B2B Telemetry & AI SRE Copilot Platform",
   description:
     "High-throughput multi-tenant telemetry ingestion buffer with autonomous Google Gemini AI Site Reliability incident triage.",
+  icons: {
+    icon: "/icon.svg",
+    shortcut: "/icon.svg",
+    apple: "/icon.svg",
+  },
 };
 
 export default function RootLayout({
