@@ -278,23 +278,23 @@ export function OverviewTab({
         </div>
 
         <div className="overflow-x-auto">
-          <table className="w-full text-left font-mono text-xs">
+          <table className="w-full min-w-[520px] text-left font-mono text-xs">
             <thead>
               <tr className="border-b border-slate-100 dark:border-slate-800 text-slate-400 dark:text-slate-500 text-[11px]">
-                <th className="pb-3 font-semibold uppercase">TIME</th>
-                <th className="pb-3 font-semibold uppercase">METHOD</th>
-                <th className="pb-3 font-semibold uppercase">ENDPOINT</th>
-                <th className="pb-3 font-semibold uppercase">STATUS</th>
+                <th className="pb-3 pr-6 font-semibold uppercase">TIME</th>
+                <th className="pb-3 pr-6 font-semibold uppercase">METHOD</th>
+                <th className="pb-3 pr-6 font-semibold uppercase">ENDPOINT</th>
+                <th className="pb-3 pr-6 font-semibold uppercase">STATUS</th>
                 <th className="pb-3 font-semibold uppercase text-right">LATENCY</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 dark:divide-slate-800 text-slate-700 dark:text-slate-300">
               {recentLogs.slice(0, 5).map((log) => (
                 <tr key={log.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/40 transition">
-                  <td className="py-3 text-slate-400 dark:text-slate-500">{new Date(log.timestamp).toLocaleTimeString()}</td>
-                  <td className="py-3 font-bold text-slate-800 dark:text-slate-200">{log.method}</td>
-                  <td className="py-3 text-slate-700 dark:text-slate-300">{log.endpoint}</td>
-                  <td className="py-3">
+                  <td className="py-3 pr-6 text-slate-400 dark:text-slate-500 whitespace-nowrap">{new Date(log.timestamp).toLocaleTimeString()}</td>
+                  <td className="py-3 pr-6 font-bold text-slate-800 dark:text-slate-200">{log.method}</td>
+                  <td className="py-3 pr-6 text-slate-700 dark:text-slate-300 font-semibold min-w-[160px]">{log.endpoint}</td>
+                  <td className="py-3 pr-6 whitespace-nowrap">
                     <span
                       className={`px-2 py-0.5 rounded-full text-[10px] font-bold border ${
                         log.statusCode < 300
@@ -307,7 +307,7 @@ export function OverviewTab({
                       {log.statusCode}
                     </span>
                   </td>
-                  <td className="py-3 text-right font-medium">{log.latency}ms</td>
+                  <td className="py-3 text-right font-medium whitespace-nowrap">{log.latency}ms</td>
                 </tr>
               ))}
             </tbody>

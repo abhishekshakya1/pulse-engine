@@ -140,61 +140,114 @@ export function LiveStreamTab({ logs, onRefresh, isLoading }: LiveStreamTabProps
               return (
                 <div
                   key={log.id}
-                  className="px-5 py-3 hover:bg-slate-50 dark:hover:bg-slate-800/40 transition flex items-center justify-between gap-4 text-[11px]"
+                  className="px-4 sm:px-5 py-3 hover:bg-slate-50 dark:hover:bg-slate-800/40 transition text-[11px]"
                 >
-                  <div className="flex items-center gap-4 flex-1 min-w-0">
-                    {/* Timestamp */}
-                    <span className="text-slate-400 dark:text-slate-500 shrink-0 font-medium">
-                      {new Date(log.timestamp).toLocaleTimeString()}
-                    </span>
-
-                    {/* Method */}
-                    <span
-                      className={`font-extrabold shrink-0 w-12 ${
-                        log.method === "GET"
-                          ? "text-blue-600 dark:text-blue-400"
-                          : log.method === "POST"
-                          ? "text-indigo-600 dark:text-purple-400"
-                          : log.method === "DELETE"
-                          ? "text-rose-600 dark:text-rose-400"
-                          : "text-amber-600 dark:text-amber-400"
-                      }`}
-                    >
-                      {log.method}
-                    </span>
-
-                    {/* Endpoint */}
-                    <span className="text-slate-800 dark:text-slate-200 truncate flex-1 font-semibold">
+                  {/* MOBILE VIEW (< sm): 2-line stacked card so endpoints are 100% visible */}
+                  <div className="flex sm:hidden flex-col gap-1.5">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <span
+                          className={`font-extrabold ${
+                            log.method === "GET"
+                              ? "text-blue-600 dark:text-blue-400"
+                              : log.method === "POST"
+                              ? "text-indigo-600 dark:text-purple-400"
+                              : log.method === "DELETE"
+                              ? "text-rose-600 dark:text-rose-400"
+                              : "text-amber-600 dark:text-amber-400"
+                          }`}
+                        >
+                          {log.method}
+                        </span>
+                        <span
+                          className={`px-2 py-0.5 rounded-full font-bold text-[10px] border ${
+                            is2xx
+                              ? "bg-emerald-50 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-400 border-emerald-200 dark:border-emerald-800/40"
+                              : is4xx
+                              ? "bg-amber-50 dark:bg-amber-950 text-amber-700 dark:text-amber-400 border-amber-200 dark:border-amber-800/40"
+                              : "bg-rose-50 dark:bg-rose-950 text-rose-700 dark:text-rose-400 border-rose-200 dark:border-rose-800/40"
+                          }`}
+                        >
+                          {log.statusCode}
+                        </span>
+                        <span
+                          className={`font-medium ${
+                            log.latency < 200
+                              ? "text-slate-500 dark:text-slate-400"
+                              : log.latency < 1000
+                              ? "text-amber-600 dark:text-amber-400 font-bold"
+                              : "text-rose-600 dark:text-rose-400 font-bold"
+                          }`}
+                        >
+                          {log.latency}ms
+                        </span>
+                      </div>
+                      <span className="text-slate-400 dark:text-slate-500 text-[10px] font-medium">
+                        {new Date(log.timestamp).toLocaleTimeString()}
+                      </span>
+                    </div>
+                    {/* Full un-truncated endpoint on 2nd line */}
+                    <div className="font-semibold text-slate-800 dark:text-slate-200 text-xs break-all">
                       {log.endpoint}
-                    </span>
+                    </div>
                   </div>
 
-                  <div className="flex items-center gap-4 shrink-0">
-                    {/* Status Code Badge */}
-                    <span
-                      className={`px-2.5 py-0.5 rounded-full font-bold text-[10px] border ${
-                        is2xx
-                          ? "bg-emerald-50 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-400 border-emerald-200 dark:border-emerald-800/40"
-                          : is4xx
-                          ? "bg-amber-50 dark:bg-amber-950 text-amber-700 dark:text-amber-400 border-amber-200 dark:border-amber-800/40"
-                          : "bg-rose-50 dark:bg-rose-950 text-rose-700 dark:text-rose-400 border-rose-200 dark:border-rose-800/40"
-                      }`}
-                    >
-                      {log.statusCode}
-                    </span>
+                  {/* DESKTOP / TABLET VIEW (>= sm): 1-line horizontal table row */}
+                  <div className="hidden sm:flex items-center justify-between gap-4">
+                    <div className="flex items-center gap-4 flex-1 min-w-0">
+                      {/* Timestamp */}
+                      <span className="text-slate-400 dark:text-slate-500 shrink-0 font-medium">
+                        {new Date(log.timestamp).toLocaleTimeString()}
+                      </span>
 
-                    {/* Latency */}
-                    <span
-                      className={`w-16 text-right font-medium ${
-                        log.latency < 200
-                          ? "text-slate-500 dark:text-slate-400"
-                          : log.latency < 1000
-                          ? "text-amber-600 dark:text-amber-400 font-bold"
-                          : "text-rose-600 dark:text-rose-400 font-bold"
-                      }`}
-                    >
-                      {log.latency}ms
-                    </span>
+                      {/* Method */}
+                      <span
+                        className={`font-extrabold shrink-0 w-12 ${
+                          log.method === "GET"
+                            ? "text-blue-600 dark:text-blue-400"
+                            : log.method === "POST"
+                            ? "text-indigo-600 dark:text-purple-400"
+                            : log.method === "DELETE"
+                            ? "text-rose-600 dark:text-rose-400"
+                            : "text-amber-600 dark:text-amber-400"
+                        }`}
+                      >
+                        {log.method}
+                      </span>
+
+                      {/* Endpoint */}
+                      <span className="text-slate-800 dark:text-slate-200 truncate flex-1 font-semibold">
+                        {log.endpoint}
+                      </span>
+                    </div>
+
+                    <div className="flex items-center gap-4 shrink-0">
+                      {/* Status Code Badge */}
+                      <span
+                        className={`px-2.5 py-0.5 rounded-full font-bold text-[10px] border ${
+                          is2xx
+                            ? "bg-emerald-50 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-400 border-emerald-200 dark:border-emerald-800/40"
+                            : is4xx
+                            ? "bg-amber-50 dark:bg-amber-950 text-amber-700 dark:text-amber-400 border-amber-200 dark:border-amber-800/40"
+                            : "bg-rose-50 dark:bg-rose-950 text-rose-700 dark:text-rose-400 border-rose-200 dark:border-rose-800/40"
+                        }`}
+                      >
+                        {log.statusCode}
+                      </span>
+
+                      {/* Latency */}
+                      <span
+                        className={`w-16 text-right font-medium ${
+                          log.latency < 200
+                            ? "text-slate-500 dark:text-slate-400"
+                            : log.latency < 1000
+                            ? "text-amber-600 dark:text-amber-400 font-bold"
+                            : "text-rose-600 dark:text-rose-400 font-bold"
+                        }`}
+                      >
+                        {log.latency}ms
+                      </span>
+                    </div>
                   </div>
                 </div>
               );

@@ -321,6 +321,7 @@ function DashboardContent() {
           <OverviewTab
             stats={stats}
             monthlyQuota={organization?.monthlyQuota || 10000}
+            eventsCount={organization?.eventsCount || 0}
             plan={organization?.plan || "FREE"}
             chartData={chartData}
             recentLogs={recentLogs}
