@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import {
   Activity,
+  ExternalLink,
   LogOut,
   RefreshCw,
   Radio,
@@ -53,14 +54,27 @@ export default function Navbar({
         <div className="flex items-center justify-between h-16 gap-2">
           {/* LEFT: Logo & Tenant Organization Badge */}
           <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-            <Link href="/" className="flex items-center gap-2 group">
+            <div className="flex items-center gap-1.5">
+            <button
+              onClick={() => setActiveTab("overview")}
+              className="flex items-center gap-2 group cursor-pointer text-left"
+              title="PulseEngine Dashboard Overview"
+            >
               <div className="h-8 w-8 rounded-xl bg-indigo-600 flex items-center justify-center text-white shadow-md shadow-indigo-600/20 group-hover:scale-105 transition-transform">
                 <Activity className="h-4 w-4" />
               </div>
               <span className="font-extrabold text-base tracking-tight text-slate-900 dark:text-white hidden sm:inline-block">
                 PulseEngine
               </span>
+            </button>
+            <Link
+              href="/"
+              className="hidden lg:inline-flex p-1 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition"
+              title="Visit Public Landing Page"
+            >
+              <ExternalLink className="w-3.5 h-3.5" />
             </Link>
+          </div>
 
             {organization && (
               <div className="flex items-center gap-1.5 sm:gap-2 pl-2 sm:pl-3 border-l border-slate-200 dark:border-slate-800">

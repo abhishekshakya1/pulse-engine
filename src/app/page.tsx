@@ -4,6 +4,8 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import {
   Activity,
+  Menu,
+  X,
   ShieldAlert,
   BrainCircuit,
   Zap,
@@ -134,6 +136,14 @@ function generateDemoLogs(status: "HEALTHY" | "CRITICAL" | "DEGRADED"): DemoLog[
 
 export default function LandingPage() {
   const [copiedSnippet, setCopiedSnippet] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [baseUrl, setBaseUrl] = useState("https://engine-lovat-beta.vercel.app");
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setBaseUrl(window.location.origin);
+    }
+  }, []);
   const [session, setSession] = useState<any>(null);
 
   // Demo Sandbox Interactive State
@@ -184,10 +194,10 @@ export default function LandingPage() {
   }, []);
 
   const copyQuickstart = () => {
-    navigator.clipboard.writeText(`curl -X POST https://api.pulseengine.dev/v1/telemetry \\
-  -H "Authorization: Bearer pe_live_prod_99x" \\
+    navigator.clipboard.writeText(`curl -X POST ${baseUrl}/api/v1/ingest \\
+  -H "x-api-key: pe_live_your_api_key_here" \\
   -H "Content-Type: application/json" \\
-  -d '{"endpoint":"/api/v1/checkout","statusCode":200,"latency":42}'`);
+  -d '{"endpoint":"/api/v1/checkout","method":"POST","statusCode":200,"latency":42}'`);
     setCopiedSnippet(true);
     setTimeout(() => setCopiedSnippet(false), 2000);
   };
@@ -282,8 +292,17 @@ export default function LandingPage() {
             </a>
           </nav>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             <ThemeToggle />
+
+            {/* Mobile Hamburger Toggle Button */}
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="md:hidden p-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition cursor-pointer"
+              aria-label="Toggle mobile menu"
+            >
+              {mobileMenuOpen ? <X className="w-5 h-5 text-indigo-500" /> : <Menu className="w-5 h-5" />}
+            </button>
 
             {(session?.userId || session?.email) ? (
               <div className="flex items-center gap-3">
@@ -318,6 +337,73 @@ export default function LandingPage() {
             )}
           </div>
         </div>
+              {/* Mobile Slide-down Navigation Drawer */}
+        {mobileMenuOpen && (
+          <div className="md:hidden border-t border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-slate-950/95 backdrop-blur-xl px-4 py-4 space-y-3 animate-in slide-in-from-top-2 duration-200">
+            <nav className="flex flex-col space-y-1 text-sm font-semibold text-slate-700 dark:text-slate-300">
+              <a
+                href="#features"
+                onClick={() => setMobileMenuOpen(false)}
+                className="px-3 py-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition"
+              >
+                Features
+              </a>
+              <a
+                href="#architecture"
+                onClick={() => setMobileMenuOpen(false)}
+                className="px-3 py-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition"
+              >
+                Architecture
+              </a>
+              <a
+                href="#demo"
+                onClick={() => setMobileMenuOpen(false)}
+                className="px-3 py-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition flex items-center gap-2 text-indigo-600 dark:text-indigo-400"
+              >
+                <Sparkles className="w-4 h-4" />
+                Live Demo
+              </a>
+              <a
+                href="#pricing"
+                onClick={() => setMobileMenuOpen(false)}
+                className="px-3 py-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition"
+              >
+                Pricing
+              </a>
+            </nav>
+
+            <div className="pt-3 border-t border-slate-200 dark:border-slate-800 flex flex-col gap-2">
+              {(session?.userId || session?.email) ? (
+                <Link
+                  href="/dashboard"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="w-full py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs text-center flex items-center justify-center gap-2 shadow-md"
+                >
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                  Go to Dashboard
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              ) : (
+                <div className="grid grid-cols-2 gap-2">
+                  <Link
+                    href="/login"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 font-bold text-xs text-center hover:bg-slate-100 dark:hover:bg-slate-800 transition"
+                  >
+                    Sign In
+                  </Link>
+                  <Link
+                    href="/register"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs text-center shadow-md transition"
+                  >
+                    Get Started
+                  </Link>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
       </header>
 
       {/* 2. HERO SECTION */}
@@ -388,16 +474,16 @@ export default function LandingPage() {
             <div className="p-6 font-mono text-xs sm:text-sm leading-relaxed overflow-x-auto bg-slate-950/90">
               <div className="text-slate-500"># Send telemetry from Express, Next.js, Python, or Go microservices</div>
               <div className="text-cyan-400 font-semibold mt-1">
-                curl -X POST https://api.pulseengine.dev/v1/telemetry \\
+                curl -X POST {baseUrl}/api/v1/ingest \\
               </div>
               <div className="text-slate-300 pl-4">
-                -H <span className="text-emerald-400">&quot;Authorization: Bearer pe_live_prod_99x&quot;</span> \\
+                -H <span className="text-emerald-400">&quot;x-api-key: pe_live_your_api_key_here&quot;</span> \\
               </div>
               <div className="text-slate-300 pl-4">
                 -H <span className="text-emerald-400">&quot;Content-Type: application/json&quot;</span> \\
               </div>
               <div className="text-slate-300 pl-4">
-                -d <span className="text-amber-300">&apos;&#123;&quot;endpoint&quot;:&quot;/api/v1/checkout&quot;,&quot;statusCode&quot;:200,&quot;latency&quot;:42&#125;&apos;</span>
+                -d <span className="text-amber-300">&apos;&#123;&quot;endpoint&quot;:&quot;/api/v1/checkout&quot;,&quot;method&quot;:&quot;POST&quot;,&quot;statusCode&quot;:200,&quot;latency&quot;:42&#125;&apos;</span>
               </div>
               <div className="mt-4 pt-4 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
                 <span className="flex items-center gap-2">

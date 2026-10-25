@@ -1,7 +1,8 @@
 ﻿"use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 import Navbar from "@/components/dashboard/Navbar";
 import { OverviewTab } from "@/components/dashboard/OverviewTab";
 import { IncidentsTab } from "@/components/dashboard/IncidentsTab";
@@ -24,12 +25,34 @@ import {
   upgradeToProAction,
 } from "@/app/actions/billingActions";
 
-export default function DashboardPage() {
+function DashboardContent() {
   const router = useRouter();
   const toast = useToast();
 
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState("overview");
+  const searchParams = useSearchParams();
+  const tabParam = searchParams.get("tab");
+  const validTabs = ["overview", "incidents", "stream", "quickstart", "billing"];
+
+  const [activeTab, setActiveTabState] = useState(() => {
+    return tabParam && validTabs.includes(tabParam) ? tabParam : "overview";
+  });
+
+  // Sync tab if URL changes (e.g. browser back/forward or landing page CTA)
+  useEffect(() => {
+    if (tabParam && validTabs.includes(tabParam)) {
+      setActiveTabState(tabParam);
+    }
+  }, [tabParam]);
+
+  const setActiveTab = (tab: string) => {
+    setActiveTabState(tab);
+    if (typeof window !== "undefined") {
+      const url = new URL(window.location.href);
+      url.searchParams.set("tab", tab);
+      window.history.replaceState({}, "", url.toString());
+    }
+  };
   const [autoRefresh, setAutoRefresh] = useState(true);
 
   // Auth & Org State
@@ -359,5 +382,23 @@ export default function DashboardPage() {
         }}
       />
     </div>
+  );
+}
+
+
+export default function DashboardPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100">
+        <div className="flex flex-col items-center gap-3">
+          <div className="w-10 h-10 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin" />
+          <span className="text-sm font-bold text-slate-500">
+            Connecting to PulseEngine Telemetry...
+          </span>
+        </div>
+      </div>
+    }>
+      <DashboardContent />
+    </Suspense>
   );
 }

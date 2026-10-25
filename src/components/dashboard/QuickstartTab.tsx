@@ -176,7 +176,7 @@ curl -X POST ${baseUrl}/api/v1/ingest \\
         </div>
 
         <div className="flex items-center gap-2">
-          <code className="px-3 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-mono font-semibold text-indigo-600 dark:text-indigo-400">
+          <code className="px-3 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-mono font-semibold text-indigo-600 dark:text-indigo-400 truncate max-w-[180px] sm:max-w-none">
             {activeKey}
           </code>
           <button

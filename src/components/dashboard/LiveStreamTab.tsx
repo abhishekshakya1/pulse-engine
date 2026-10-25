@@ -56,7 +56,7 @@ export function LiveStreamTab({ logs, onRefresh, isLoading }: LiveStreamTabProps
 
         {/* Status Filter Pills & Refresh */}
         <div className="flex items-center gap-2">
-          <div className="flex items-center gap-1 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 p-1 rounded-xl text-xs font-semibold">
+          <div className="flex items-center gap-1 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 p-1 rounded-xl text-xs font-semibold overflow-x-auto no-scrollbar">
             <button
               onClick={() => setStatusFilter("ALL")}
               className={`px-3 py-1 rounded-lg transition ${

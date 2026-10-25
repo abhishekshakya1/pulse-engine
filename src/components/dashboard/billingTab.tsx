@@ -569,14 +569,14 @@ export function BillingTab({
             </p>
           </div>
 
-          <div className="flex items-center gap-2 shrink-0">
-            <div className="flex items-center bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl px-4 py-2.5 font-mono text-xs text-slate-800 dark:text-slate-200 shadow-inner">
-              <span className="tracking-wider">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 w-full lg:w-auto shrink-0">
+            <div className="flex items-center justify-between bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl px-4 py-2.5 font-mono text-xs text-slate-800 dark:text-slate-200 shadow-inner overflow-hidden">
+              <span className="tracking-wider truncate max-w-[200px] sm:max-w-xs md:max-w-sm">
                 {showKey ? activeKey : "••••••••••••••••••••••••••••••••••••••••"}
               </span>
               <button
                 onClick={() => setShowKey(!showKey)}
-                className="ml-3 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition cursor-pointer"
+                className="ml-3 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition cursor-pointer shrink-0"
                 title={showKey ? "Hide key" : "Show key"}
               >
                 {showKey ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
@@ -585,7 +585,7 @@ export function BillingTab({
 
             <button
               onClick={handleCopyKey}
-              className="flex items-center gap-1.5 px-4 py-2.5 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition shadow-md shadow-indigo-600/20 cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
+              className="flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition shadow-md shadow-indigo-600/20 cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
             >
               {copiedKey ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
               {copiedKey ? "Copied" : "Copy"}
