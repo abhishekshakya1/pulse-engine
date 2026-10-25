@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import {
   Activity,
+  Zap,
   Home,
   ExternalLink,
   LogOut,
@@ -61,8 +62,8 @@ export default function Navbar({
               className="flex items-center gap-2 group cursor-pointer text-left"
               title="PulseEngine Dashboard Overview"
             >
-              <div className="h-8 w-8 rounded-xl bg-indigo-600 flex items-center justify-center text-white shadow-md shadow-indigo-600/20 group-hover:scale-105 transition-transform">
-                <Activity className="h-4 w-4" />
+              <div className="h-8 w-8 rounded-xl bg-gradient-to-tr from-indigo-600 to-violet-500 flex items-center justify-center text-white shadow-md shadow-indigo-500/20 group-hover:scale-105 transition-transform">
+                <Zap className="h-4 w-4 text-white" />
               </div>
               <span className="font-extrabold text-base tracking-tight text-slate-900 dark:text-white hidden sm:inline-block">
                 PulseEngine
@@ -185,15 +186,7 @@ export default function Navbar({
         </div>
 
         {/* MOBILE NAVIGATION BAR (Horizontal Scrolling Glass Pill Bar) */}
-        <div className="flex md:hidden items-center justify-between py-2 border-t border-slate-100 dark:border-slate-800 overflow-x-auto gap-1.5 text-xs no-scrollbar">
-          <Link
-            href="/"
-            className="px-2.5 py-1 rounded-lg shrink-0 font-bold transition text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/70 border border-indigo-200 dark:border-indigo-800/80 flex items-center gap-1 shadow-xs"
-            title="Go to Public Landing Page"
-          >
-            <Home className="w-3 h-3" />
-            <span>Home</span>
-          </Link>
+        <div className="flex md:hidden items-center justify-between py-2 border-t border-slate-100 dark:border-slate-800 overflow-x-auto gap-1 text-xs no-scrollbar">
           {tabs.map((tab) => (
             <button
               key={tab.id}

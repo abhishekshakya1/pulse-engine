@@ -261,8 +261,8 @@ export default function LandingPage() {
       <header className="sticky top-0 z-50 backdrop-blur-md bg-white/90 dark:bg-slate-950/90 border-b border-slate-200 dark:border-slate-800 transition-colors">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-cyan-400 flex items-center justify-center shadow-lg shadow-indigo-500/20 group-hover:scale-105 transition-transform">
-              <Activity className="w-5 h-5 text-white" />
+            <div className="h-9 w-9 rounded-xl bg-gradient-to-tr from-indigo-600 to-violet-500 flex items-center justify-center shadow-lg shadow-indigo-500/20 group-hover:scale-105 transition-transform">
+              <Zap className="h-5 w-5 text-white" />
             </div>
             <div className="flex flex-col">
               <div className="flex items-center gap-2">
@@ -1007,7 +1007,9 @@ export default function LandingPage() {
       <footer className="py-12 border-t border-slate-200 dark:border-slate-800 text-slate-500 text-xs">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <Activity className="w-4 h-4 text-indigo-600" />
+            <div className="w-6 h-6 rounded-lg bg-gradient-to-tr from-indigo-600 to-violet-500 flex items-center justify-center shadow-sm shadow-indigo-500/20 text-white">
+              <Zap className="w-3.5 h-3.5 text-white" />
+            </div>
             <span className="font-bold text-slate-900 dark:text-white">PulseEngine</span>
             <span>&copy; {new Date().getFullYear()} PulseEngine Inc. Production Observability.</span>
           </div>
