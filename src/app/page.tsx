@@ -256,7 +256,7 @@ export default function LandingPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors duration-300 font-sans selection:bg-indigo-500 selection:text-white">
+    <div className="min-h-screen overflow-x-hidden w-full max-w-full bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors duration-300 font-sans selection:bg-indigo-500 selection:text-white">
       {/* 1. TOP NAVIGATION BAR */}
       <header className="sticky top-0 z-50 backdrop-blur-md bg-white/90 dark:bg-slate-950/90 border-b border-slate-200 dark:border-slate-800 transition-colors">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
@@ -269,7 +269,7 @@ export default function LandingPage() {
                 <span className="font-extrabold text-lg tracking-tight text-slate-900 dark:text-white">
                   PulseEngine
                 </span>
-                <span className="text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-800/60">
+                <span className="hidden sm:inline-block text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-800/60">
                   AI SRE
                 </span>
               </div>
@@ -305,7 +305,7 @@ export default function LandingPage() {
             </button>
 
             {(session?.userId || session?.email) ? (
-              <div className="flex items-center gap-3">
+              <div className="hidden sm:flex items-center gap-3">
                 <span className="hidden sm:inline-block text-xs font-semibold text-slate-600 dark:text-slate-400">
                   {session.organizationName || session.email}
                 </span>
@@ -319,7 +319,7 @@ export default function LandingPage() {
                 </Link>
               </div>
             ) : (
-              <>
+              <div className="hidden sm:flex items-center gap-2">
                 <Link
                   href="/login"
                   className="text-sm font-bold text-slate-700 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 px-3 py-2 rounded-lg transition-colors"
@@ -333,69 +333,75 @@ export default function LandingPage() {
                   Get Started
                   <ArrowRight className="w-4 h-4" />
                 </Link>
-              </>
+              </div>
             )}
           </div>
         </div>
               {/* Mobile Slide-down Navigation Drawer */}
         {mobileMenuOpen && (
-          <div className="md:hidden border-t border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-slate-950/95 backdrop-blur-xl px-4 py-4 space-y-3 animate-in slide-in-from-top-2 duration-200">
+          <div className="md:hidden border-t border-slate-200/80 dark:border-slate-800/80 bg-white/95 dark:bg-slate-950/95 backdrop-blur-2xl px-5 py-4 space-y-4 animate-in slide-in-from-top-2 duration-200 shadow-xl">
             <nav className="flex flex-col space-y-1 text-sm font-semibold text-slate-700 dark:text-slate-300">
               <a
                 href="#features"
                 onClick={() => setMobileMenuOpen(false)}
-                className="px-3 py-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition"
+                className="flex items-center justify-between px-3.5 py-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800/70 transition"
               >
-                Features
+                <span>Features</span>
+                <ChevronRight className="w-4 h-4 text-slate-400" />
               </a>
               <a
                 href="#architecture"
                 onClick={() => setMobileMenuOpen(false)}
-                className="px-3 py-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition"
+                className="flex items-center justify-between px-3.5 py-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800/70 transition"
               >
-                Architecture
+                <span>Architecture</span>
+                <ChevronRight className="w-4 h-4 text-slate-400" />
               </a>
               <a
                 href="#demo"
                 onClick={() => setMobileMenuOpen(false)}
-                className="px-3 py-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition flex items-center gap-2 text-indigo-600 dark:text-indigo-400"
+                className="flex items-center justify-between px-3.5 py-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800/70 transition text-indigo-600 dark:text-indigo-400"
               >
-                <Sparkles className="w-4 h-4" />
-                Live Demo
+                <span className="flex items-center gap-2">
+                  <Sparkles className="w-4 h-4 text-indigo-500" />
+                  Live Demo Sandbox
+                </span>
+                <ChevronRight className="w-4 h-4 text-indigo-400" />
               </a>
               <a
                 href="#pricing"
                 onClick={() => setMobileMenuOpen(false)}
-                className="px-3 py-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition"
+                className="flex items-center justify-between px-3.5 py-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800/70 transition"
               >
-                Pricing
+                <span>Pricing</span>
+                <ChevronRight className="w-4 h-4 text-slate-400" />
               </a>
             </nav>
 
-            <div className="pt-3 border-t border-slate-200 dark:border-slate-800 flex flex-col gap-2">
+            <div className="pt-3 border-t border-slate-200 dark:border-slate-800">
               {(session?.userId || session?.email) ? (
                 <Link
                   href="/dashboard"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="w-full py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs text-center flex items-center justify-center gap-2 shadow-md"
+                  className="w-full py-2.5 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-md shadow-indigo-600/25 transition"
                 >
                   <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                  Go to Dashboard
+                  <span>Go to Dashboard</span>
                   <ArrowRight className="w-4 h-4" />
                 </Link>
               ) : (
-                <div className="grid grid-cols-2 gap-2">
+                <div className="grid grid-cols-2 gap-2.5">
                   <Link
                     href="/login"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 font-bold text-xs text-center hover:bg-slate-100 dark:hover:bg-slate-800 transition"
+                    className="py-2.5 px-4 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 font-bold text-xs text-center hover:bg-slate-100 dark:hover:bg-slate-800 transition"
                   >
                     Sign In
                   </Link>
                   <Link
                     href="/register"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs text-center shadow-md transition"
+                    className="py-2.5 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs text-center shadow-md shadow-indigo-600/25 transition"
                   >
                     Get Started
                   </Link>

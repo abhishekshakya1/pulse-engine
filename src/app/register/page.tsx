@@ -3,7 +3,9 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Zap, Lock, Mail, Building2, User, ArrowRight, CheckCircle2, AlertCircle, Loader2 } from "lucide-react";
+import { Zap, Lock,
+  Eye,
+  EyeOff, Mail, Building2, User, ArrowRight, CheckCircle2, AlertCircle, Loader2 } from "lucide-react";
 import { registerAction } from "@/app/actions/authActions";
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import { useToast } from "@/components/ui/Toast";
@@ -16,6 +18,7 @@ export default function RegisterPage() {
   const [organizationName, setOrganizationName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);

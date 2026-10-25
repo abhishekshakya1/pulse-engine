@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import {
   Activity,
+  Home,
   ExternalLink,
   LogOut,
   RefreshCw,

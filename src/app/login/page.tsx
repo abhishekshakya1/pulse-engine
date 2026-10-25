@@ -3,7 +3,9 @@
 import React, { useState, useEffect, Suspense } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Zap, Lock, Mail, ArrowRight, CheckCircle2, AlertCircle, Loader2 } from "lucide-react";
+import { Zap, Lock,
+  Eye,
+  EyeOff, Mail, ArrowRight, CheckCircle2, AlertCircle, Loader2 } from "lucide-react";
 import { loginAction } from "@/app/actions/authActions";
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import { useToast } from "@/components/ui/Toast";
@@ -15,6 +17,7 @@ function LoginForm() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
