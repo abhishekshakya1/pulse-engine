@@ -163,7 +163,7 @@ Traditional APMs (Application Performance Monitoring) introduce notable runtime 
 > **Live Monitoring View**: Tracks real-time throughput volume, rolling 24-hour latency curves, error rate SLAs, and an instant request stream with sub-millisecond precision.
 
 <div align="center">
-  <img src="public/screenshots/dashboard.png" alt="PulseEngine Telemetry & Golden Signals Dashboard" width="100%" style="border-radius: 14px; border: 1px solid #334155; box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);" />
+  <img src="public/screenshots/dashboard.png" alt="PulseEngine Telemetry & Golden Signals Dashboard" width="850" />
 </div>
 
 - **4 Golden Signals**: Real-time KPI cards for **Total Ingested Events** (with dynamic quota consumption bar & remaining counter), **Average Latency**, **Error Rate %**, and **Active Incidents**.
@@ -178,7 +178,7 @@ Traditional APMs (Application Performance Monitoring) introduce notable runtime 
 > **Autonomous Incident Triage**: Triggered automatically when 5xx error thresholds or latency SLA violations occur, eliminating manual on-call investigative overhead.
 
 <div align="center">
-  <img src="public/screenshots/ai-diagnosis.jpg" alt="Autonomous Gemini AI SRE Diagnosis Modal" width="90%" style="border-radius: 14px; border: 1px solid #334155; box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);" />
+  <img src="public/screenshots/ai-diagnosis.jpg" alt="Autonomous Gemini AI SRE Diagnosis Modal" width="680" />
 </div>
 
 - **Root-Cause Analysis (RCA)**: Pinpoints upstream database pool exhaustion, connection timeouts, or unhandled exceptions.
@@ -193,7 +193,7 @@ Traditional APMs (Application Performance Monitoring) introduce notable runtime 
 > **Developer Experience & Live Simulation**: Experience traffic anomalies, live curve spikes, and Gemini AI diagnosis before connecting production services.
 
 <div align="center">
-  <img src="public/screenshots/landing.jpg" alt="PulseEngine Public Landing Page and SRE Sandbox" width="85%" style="border-radius: 14px; border: 1px solid #334155; box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);" />
+  <img src="public/screenshots/landing.jpg" alt="PulseEngine Public Landing Page and SRE Sandbox" width="340" />
 </div>
 
 - **Interactive Anomaly Simulator**: Simulate baseline 200 OK traffic, sudden 500 Outages, or 3.2s Latency Spikes with live chart updates.
