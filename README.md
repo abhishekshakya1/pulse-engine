@@ -155,50 +155,50 @@ Traditional APMs (Application Performance Monitoring) introduce notable runtime 
 
 ## 🖥️ Interactive Platform Showcase
 
-### 1. Real-Time Telemetry & Golden Signals Dashboard
-```
-┌────────────────────────────────────────────────────────────────────────────────────────┐
-│  ⚡ PulseEngine Dashboard        [ Pipeline Live: 200 OK ]   [ 🔄 Live 5s ]   [ 🌙 Theme ] │
-├────────────────────────────────────────────────────────────────────────────────────────┤
-│  [ TOTAL EVENTS ]         [ AVG LATENCY ]         [ ERROR RATE ]      [ ACTIVE INCIDENTS ]│
-│    37 / 500,000              42ms                    0.0%                    0 OPEN        │
-│    (Pro Plan: 0.1%)          Healthy SLA             Healthy SLA         All Systems Up    │
-├────────────────────────────────────────────────────────────────────────────────────────┤
-│  📈 Throughput & Latency Trend (24h Rolling Window)                                   │
-│  ───────────────────────────────────────────────────────────────────────────────────── │
-│   Reqs │     ╭───╮             ╭─────╮               ╭──────╮      ── Requests (Green) │
-│        │  ───╯   ╰─────────────╯     ╰───────────────╯      ╰───   ── Latency (Indigo) │
-│        └─────────────────────────────────────────────────────────                      │
-│         00:00        04:00        08:00        12:00        16:00        20:00         │
-├────────────────────────────────────────────────────────────────────────────────────────┤
-│  ⚡ Live Stream Viewer:  [ Filter by endpoint: /api/v1/... ]   [ All ] [ 2xx ] [ 4xx ] [ 5xx ]│
-│  ───────────────────────────────────────────────────────────────────────────────────── │
-│  10:14:23 PM   POST   /api/v1/doctors        [ 200 OK ]    378ms   transaction_auth    │
-│  10:14:15 PM   POST   /api/v1/auth/login     [ 200 OK ]     45ms   jwt_session_valid   │
-│  10:13:58 PM   GET    /api/v1/appointments  [ 200 OK ]     28ms   cache_hit_edge      │
-└────────────────────────────────────────────────────────────────────────────────────────┘
-```
+<div align="center">
+  <p><em>Real-world production screenshots captured live from the deployed platform.</em></p>
+</div>
 
-### 2. Autonomous Gemini AI SRE Diagnosis Modal
-```
-┌────────────────────────────────────────────────────────────────────────────────────────┐
-│  🤖 GEMINI 3.8 FLASH SRE INCIDENT DIAGNOSIS                             [ Status: OPEN ]│
-├────────────────────────────────────────────────────────────────────────────────────────┤
-│  Signature: POST /api/v1/checkout/pay → Status 500 Internal Server Error (DB Timeout) │
-│                                                                                        │
-│  🔍 ROOT-CAUSE ANALYSIS (RCA)                                                          │
-│  Neon PostgreSQL pooler connection limit reached under sustained traffic spike.        │
-│  Pending acquisition queue timed out after 3000ms threshold.                           │
-│                                                                                        │
-│  💥 ESTIMATED BLAST RADIUS                                                             │
-│  Affecting /api/v1/checkout and downstream Stripe payment intent webhooks (~18% users) │
-│                                                                                        │
-│  🛠️ 1-CLICK EXECUTABLE REMEDIATION COMMAND                                             │
-│  $ pscale pool update --max-connections 150 && kubectl rollout restart deploy/api      │
-│                                                                                        │
-│  [ Close ]                                                   [ Mark Incident Resolved ]│
-└────────────────────────────────────────────────────────────────────────────────────────┘
-```
+### 📊 1. Real-Time Telemetry & 4 Golden Signals Dashboard
+> **Live Monitoring View**: Tracks real-time throughput volume, rolling 24-hour latency curves, error rate SLAs, and an instant request stream with sub-millisecond precision.
+
+<div align="center">
+  <img src="public/screenshots/dashboard.png" alt="PulseEngine Telemetry & Golden Signals Dashboard" width="100%" style="border-radius: 14px; border: 1px solid #334155; box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);" />
+</div>
+
+- **4 Golden Signals**: Real-time KPI cards for **Total Ingested Events** (with dynamic quota consumption bar & remaining counter), **Average Latency**, **Error Rate %**, and **Active Incidents**.
+- **Dual-Axis Recharts Analytics**: Real-time hourly throughput volume (Green) plotted against response-time curves (Indigo).
+- **Recent Telemetry Feed**: Instant inspection of request methods (`GET`, `POST`, `DELETE`), endpoints, latency (`ms`), and categorized status pills (`200`, `401`, `500`).
+
+<br />
+
+---
+
+### 🤖 2. Autonomous Google Gemini 3.8 Flash AI SRE Diagnosis
+> **Autonomous Incident Triage**: Triggered automatically when 5xx error thresholds or latency SLA violations occur, eliminating manual on-call investigative overhead.
+
+<div align="center">
+  <img src="public/screenshots/ai-diagnosis.jpg" alt="Autonomous Gemini AI SRE Diagnosis Modal" width="90%" style="border-radius: 14px; border: 1px solid #334155; box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);" />
+</div>
+
+- **Root-Cause Analysis (RCA)**: Pinpoints upstream database pool exhaustion, connection timeouts, or unhandled exceptions.
+- **Blast Radius & Business Impact**: Identifies downstream microservices and percentage of end-users impacted by degraded endpoints.
+- **1-Click Remediation**: Synthesizes exact copy-pasteable terminal commands to restore service health in seconds.
+
+<br />
+
+---
+
+### 🚀 3. Interactive Landing Page & Live SRE Architecture Sandbox
+> **Developer Experience & Live Simulation**: Experience traffic anomalies, live curve spikes, and Gemini AI diagnosis before connecting production services.
+
+<div align="center">
+  <img src="public/screenshots/landing.jpg" alt="PulseEngine Public Landing Page and SRE Sandbox" width="85%" style="border-radius: 14px; border: 1px solid #334155; box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);" />
+</div>
+
+- **Interactive Anomaly Simulator**: Simulate baseline 200 OK traffic, sudden 500 Outages, or 3.2s Latency Spikes with live chart updates.
+- **3-Line SDK Quickstart**: Drop-in cURL and language-specific middleware snippets for instant integration.
+- **Decoupled Architecture**: High-speed Redis queue buffer, asynchronous bulk batch workers, and transparent B2B SaaS pricing.
 
 ---
 
