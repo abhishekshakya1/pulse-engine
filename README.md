@@ -9,7 +9,7 @@
 
   [![Live Demo on Vercel](https://img.shields.io/badge/Live_Demo-Vercel_Edge-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://engine-lovat-beta.vercel.app)
   [![Cloud Container on Render](https://img.shields.io/badge/Docker_Container-Render_Cloud-46E3B7?style=for-the-badge&logo=render&logoColor=black)](https://pulseengine-docker.onrender.com)
-  [![GitHub Repository](https://img.shields.io/badge/GitHub-Repository-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/abhishekshakya1/engine)
+  [![GitHub Repository](https://img.shields.io/badge/GitHub-Repository-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/abhishekshakya1/pulse-engine)
 
   <br />
 
@@ -66,7 +66,7 @@ Traditional APMs (Application Performance Monitoring) introduce notable runtime 
 | :--- | :--- | :--- | :--- |
 | **Primary Production** | **Vercel Edge** | Serverless Next.js 16 App Router | [https://engine-lovat-beta.vercel.app](https://engine-lovat-beta.vercel.app) |
 | **Containerized Cloud** | **Render.com** | Dedicated Alpine Linux Container | [https://pulseengine-docker.onrender.com](https://pulseengine-docker.onrender.com) |
-| **Source Code** | **GitHub** | Git Version Control (`main` branch) | [https://github.com/abhishekshakya1/engine](https://github.com/abhishekshakya1/engine) |
+| **Source Code** | **GitHub** | Git Version Control (`main` branch) | [https://github.com/abhishekshakya1/pulse-engine](https://github.com/abhishekshakya1/pulse-engine) |
 
 ---
 
@@ -510,8 +510,8 @@ Follow these steps to run PulseEngine locally:
 
 ### 2. Clone Repository
 ```bash
-git clone https://github.com/abhishekshakya1/engine.git
-cd engine
+git clone https://github.com/abhishekshakya1/pulse-engine.git
+cd pulse-engine
 ```
 
 ### 3. Install Dependencies
@@ -555,7 +555,7 @@ Distributed under the **MIT License**. See the [`LICENSE`](LICENSE) file for com
 
 **Crafted with ❤️ by Abhishek Kumar Shakya**  
 - **GitHub**: [@abhishekshakya1](https://github.com/abhishekshakya1)  
-- **Project Repository**: [github.com/abhishekshakya1/engine](https://github.com/abhishekshakya1/engine)  
+- **Project Repository**: [github.com/abhishekshakya1/pulse-engine](https://github.com/abhishekshakya1/pulse-engine)  
 - **Live Platform**: [engine-lovat-beta.vercel.app](https://engine-lovat-beta.vercel.app)
 
 ---
